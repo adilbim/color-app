@@ -5,10 +5,10 @@ import { generatePalette } from './colorHelpers';
 
 
 function App() {
-  console.log(generatePalette(seedColors[4]));
+  console.log(generatePalette(seedColors[0]));
   return (
     <div className="App">
-      <Palette Palette={generatePalette(seedColors[4])} />
+      <Palette Palette={generatePalette(seedColors[0])} />
     </div>
   );
 }

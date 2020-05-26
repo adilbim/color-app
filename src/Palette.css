@@ -6,3 +6,15 @@
     height: 90%;
 }
 
+.palette-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 4vh;
+    font-weight: bold;
+    background-color: white;
+}
+
+.emoji{
+   margin: 0 1rem;
+}
