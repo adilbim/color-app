@@ -22,7 +22,13 @@ class Palette extends Component{
 
     render(){
         const {format, level} = this.state;
-        const ColorBoxs = this.props.Palette.colors[level].map(color => (<ColorBox name={color.name} color={color[format]} key={color.id} />))
+        const {id} = this.props.Palette;
+        const ColorBoxs = this.props.Palette.colors[level].map(color => (
+        <ColorBox 
+        name={color.name} 
+        color={color[format]} 
+        key={color.id} 
+        url={`/palette/${id}/${color.id}`} />))
         return(
             <div className="Palette">
                 <Navbar level={level} 
