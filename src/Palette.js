@@ -28,7 +28,9 @@ class Palette extends Component{
         name={color.name} 
         color={color[format]} 
         key={color.id} 
-        url={`/palette/${id}/${color.id}`} />))
+        url={`/palette/${id}/${color.id}`}
+        showLink
+        />))
         return(
             <div className="Palette">
                 <Navbar level={level} 
