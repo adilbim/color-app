@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import "./ColorBox.css";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import {Link} from 'react-router-dom';
+import chroma from 'chroma-js';
 
 class ColorBox extends Component{
    constructor(props){
@@ -22,19 +23,21 @@ class ColorBox extends Component{
         const {name, url, showLink} = this.props;
         const hex = this.props.color;
         const {copied} = this.state;
+        const isLight = chroma(hex).luminance() >= 0.6;
+        const isDark  = chroma(hex).luminance() <= 0.06;
         return (
             <CopyToClipboard text={hex} onCopy={this.handleCopy}>
             <div style={{ background: hex }} className='ColorBox'>
                 <div style={{background: hex}} className={`copy-overlay ${copied && "show"}`} />
                 <div className={`copy-mssg ${copied && "show"}`} >
                     <h1>Copied!</h1>
-                    <p>{hex}</p>
+                    <p className={isLight && 'isLight'}>{hex}</p>
                 </div>
                 <div className='copy-container'>
-                    <div className='box-content'>
-                      <span>{name}</span>
+                    <div className={`box-content ${isDark && 'isDark'}`}>
+                      <span>{name + ' ' + chroma(hex).luminance()}</span>
                     </div>
-                    <button className='copy-button'>Copy</button>
+                    <button className={`copy-button ${isLight && 'isLight'}`}>Copy</button>
                 </div>
                 {showLink && (
             <Link to={url} onClick={e => e.stopPropagation()}>    
