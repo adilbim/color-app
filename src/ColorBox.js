@@ -41,7 +41,7 @@ class ColorBox extends Component{
                 </div>
                 {showLink && (
             <Link to={url} onClick={e => e.stopPropagation()}>    
-                <span className='see-more'>More</span>
+                <span className={`see-more ${isLight && 'isLight'}`}>More</span>
             </Link>    
                 )}
            </div>
