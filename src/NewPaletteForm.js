@@ -76,9 +76,14 @@ const styles = theme => ({
 
 
 class NewPaletteForm extends React.Component {
-    state = {
-        open: false
-      };
+  constructor(props){
+    super(props);
+    this.state = {
+      open: false,
+      currentColor: 'red',
+      colors: ['teal','gold']
+    }
+  }
     
       handleDrawerOpen = () => {
         this.setState({ open: true });
@@ -88,12 +93,17 @@ class NewPaletteForm extends React.Component {
         this.setState({ open: false });
       };
 
-      handleChangeComplete = color => {
-          console.log(color);
+      handleChangeComplete = newColor => {
+        this.setState({currentColor: newColor.hex});  
+      }
+
+      addColor = () => {
+        this.setState({colors: [...this.state.colors,this.state.currentColor]});
       }
     render(){ 
         const { classes } = this.props;
         const { open } = this.state;
+        const colorAdded = this.state.colors.map(color => <li style={{backgroundColor: color}}>{color}</li>);
   return (
     <div className={classes.root}>
     <CssBaseline />
@@ -132,14 +142,18 @@ class NewPaletteForm extends React.Component {
         </IconButton>
       </div>
       <Divider />
+      <Typography variant='h4'>Design Your Palette</Typography>
       <Button variant="contained" color="secondary">
            Clear Palette
       </Button>
       <Button variant="contained" color="primary">
             Random Color
       </Button>
-      <ChromePicker color='red' onChangeComplete={this.handleChangeComplete} />
-      <Button variant='contained' color='primary'>
+      <ChromePicker color={this.state.currentColor} onChangeComplete={this.handleChangeComplete} />
+      <Button variant='contained'  
+      style={{backgroundColor: this.state.currentColor}}
+      onClick={this.addColor}
+      >
             Add Color
       </Button>
     </Drawer>
@@ -149,6 +163,9 @@ class NewPaletteForm extends React.Component {
       })}
     >
       <div className={classes.drawerHeader} />
+      <ul>
+      {colorAdded}
+      </ul>
     </main>
   </div>
 );
