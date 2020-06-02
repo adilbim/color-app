@@ -121,7 +121,19 @@ class NewPaletteForm extends React.Component {
         ValidatorForm.addValidationRule("isColorUnique", value =>
           this.state.colors.every(({ color }) => color !== this.state.currentColor)
         );
-    }
+      }
+
+      addPalette = () => {
+        let name = 'ui adil color';
+        const palette = {
+          name: name,
+          id: name.toLowerCase().replace(/ /g, "-"),
+          colors: this.state.colors
+        }
+
+        this.props.addNewPalette(palette);
+        this.props.history.push("/");
+      }
 
     render(){ 
         const { classes } = this.props;
@@ -132,7 +144,7 @@ class NewPaletteForm extends React.Component {
     <div className={classes.root}>
     <CssBaseline />
     <AppBar
-      position='fixed'
+      position='fixed' color="default"
       className={classNames(classes.appBar, {
         [classes.appBarShift]: open
       })}
@@ -149,6 +161,7 @@ class NewPaletteForm extends React.Component {
         <Typography variant='h6' color='inherit' noWrap>
           Persistent drawer
         </Typography>
+        <Button variant="contained" color="primary" onClick={this.addPalette}>Save Palette</Button>
       </Toolbar>
     </AppBar>
     <Drawer
