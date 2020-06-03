@@ -142,11 +142,14 @@ class NewPaletteForm extends React.Component {
         this.props.addNewPalette(palette);
         this.props.history.push("/");
       }
-
+       
+      deleteColorBox = (name) =>{
+        this.setState({colors: this.state.colors.filter(color => color.name !== name)});
+      }
     render(){ 
         const { classes } = this.props;
         const { open } = this.state;
-        const colorAdded = this.state.colors.map(color => <DraggableColorBox color={color}/>);
+        const colorAdded = this.state.colors.map(color => <DraggableColorBox key={color.name} handleClick={()=> this.deleteColorBox(color.name)} color={color}/>);
         const {newColorName} = this.state;
   return (
     <div className={classes.root}>
