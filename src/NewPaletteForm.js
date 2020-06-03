@@ -85,7 +85,8 @@ class NewPaletteForm extends React.Component {
       open: false,
       currentColor: 'red',
       colors: [],
-      newName: ''
+      newColorName: '',
+      newPaletteName: ''
     }
   }
     
@@ -102,12 +103,14 @@ class NewPaletteForm extends React.Component {
       }
 
       addColor = () => {
-        const color = { name: this.state.newName, color: this.state.currentColor };
-        this.setState({colors: [...this.state.colors,color], newName: ''});
+        const color = { name: this.state.newColorName, color: this.state.currentColor };
+        this.setState({colors: [...this.state.colors,color], newColorName: ''});
       }
 
       handleChange = event => {
-        this.setState({newName: event.target.value});
+        this.setState({
+          [event.target.name]: event.target.value
+        });
       }
       
       componentDidMount() {
@@ -121,13 +124,18 @@ class NewPaletteForm extends React.Component {
         ValidatorForm.addValidationRule("isColorUnique", value =>
           this.state.colors.every(({ color }) => color !== this.state.currentColor)
         );
+        
+        ValidatorForm.addValidationRule("isPaletteNameUnique", value =>
+          this.props.palettes.every(({ paletteName }) => paletteName.toLowerCase() !== this.state.newPaletteName.toLowerCase())
+        );
+
       }
 
       addPalette = () => {
-        let name = 'ui adil color';
+        let {newPaletteName} = this.state;
         const palette = {
-          name: name,
-          id: name.toLowerCase().replace(/ /g, "-"),
+          paletteName: newPaletteName,
+          id: newPaletteName.toLowerCase().replace(/ /g, "-"),
           colors: this.state.colors
         }
 
@@ -139,7 +147,7 @@ class NewPaletteForm extends React.Component {
         const { classes } = this.props;
         const { open } = this.state;
         const colorAdded = this.state.colors.map(color => <DraggableColorBox color={color}/>);
-        const {newName} = this.state;
+        const {newColorName} = this.state;
   return (
     <div className={classes.root}>
     <CssBaseline />
@@ -161,7 +169,17 @@ class NewPaletteForm extends React.Component {
         <Typography variant='h6' color='inherit' noWrap>
           Persistent drawer
         </Typography>
-        <Button variant="contained" color="primary" onClick={this.addPalette}>Save Palette</Button>
+        <ValidatorForm onSubmit={this.addPalette}>
+            <TextValidator 
+             value={this.state.newPaletteName}
+             onChange={this.handleChange}
+             name="newPaletteName"
+             validators={["required", "isPaletteNameUnique"]}
+             errorMessages={[
+               "Enter a color name", "this palette name is already used"]}
+            />
+            <Button variant="contained" color="primary" type="submit">Save Palette</Button>
+        </ValidatorForm>
       </Toolbar>
     </AppBar>
     <Drawer
@@ -189,8 +207,9 @@ class NewPaletteForm extends React.Component {
       <ChromePicker color={this.state.currentColor} onChangeComplete={this.handleChangeComplete} />
       <ValidatorForm onSubmit={this.addColor} ref='form'>
         <TextValidator 
-        value={newName} 
+        value={newColorName} 
         onChange={this.handleChange}
+        name="newColorName"
         validators={["required", "isColorNameUnique", "isColorUnique"]}
         errorMessages={[
           "Enter a color name",

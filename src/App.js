@@ -30,7 +30,13 @@ class App extends React.Component {
       <Route exact path="/" 
       render={(routProps)=> <PaletteList palettes={this.state.palettes} {...routProps} />}
       />
-      <Route exact path="/palette/new" render={(routeProps)=> <NewPaletteForm {...routeProps} addNewPalette={this.addNewPalette} />} />
+      <Route exact path="/palette/new" render={(routeProps)=>
+          <NewPaletteForm 
+            palettes={this.state.palettes} 
+            {...routeProps} 
+            addNewPalette={this.addNewPalette} 
+          />}
+      />
       <Route 
       exact 
       path="/palette/:id" 
