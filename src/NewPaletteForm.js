@@ -13,7 +13,7 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import Button from "@material-ui/core/Button";
 import ChromePicker from 'react-color';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
-import DraggableColorList from '../Draggable/DraggableColorList';
+import DraggableColorList from './DraggableColorList';
 import arrayMove from "array-move";
 
 const drawerWidth = 400;
