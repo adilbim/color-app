@@ -1,7 +1,7 @@
 import React from 'react';
-import ColorBox from '../ColorBox/ColorBox';
-import Navbar from '../Navbar/Navbar';
-import Footer from '../Footer/Footer';
+import ColorBox from './ColorBox';
+import Navbar from './Navbar';
+import Footer from './Footer';
 import { Link } from 'react-router-dom';
 
 
