@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { Route, Switch } from "react-router-dom";
-import Palette from "./Palette";
-import PaletteList from "./PaletteList";
-import seedColors from "./seedColors";
-import { generatePalette } from "./colorHelpers";
-import SingleColorPalette from "./SingleColorPalette";
-import NewPaletteForm from "./NewPaletteForm";
+import React, { useState } from 'react';
+import { Route, Switch } from 'react-router-dom';
+import Palette from './Palette';
+import PaletteList from './PaletteList';
+import seedColors from './seedColors';
+import { generatePalette } from './colorHelpers';
+import SingleColorPalette from './SingleColorPalette';
+import NewPaletteForm from './NewPaletteForm';
 
 function App() {
   const [palettes, setPalettes] = useState(seedColors);
